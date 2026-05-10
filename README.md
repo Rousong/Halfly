@@ -17,11 +17,11 @@
 使用 Xcode 打开工程：
 
 ```bash
-open ios/HouseholdLedger.xcodeproj
+open HouseholdLedger.xcodeproj
 ```
 
 也可以直接使用命令行构建：
 
 ```bash
-xcodebuild -project ios/HouseholdLedger.xcodeproj -scheme HouseholdLedger -configuration Debug -destination generic/platform=iOS -derivedDataPath /private/tmp/HouseholdLedgerDerivedData CODE_SIGNING_ALLOWED=NO build
+xcodebuild -project HouseholdLedger.xcodeproj -scheme HouseholdLedger -configuration Debug -destination generic/platform=iOS -derivedDataPath /private/tmp/HouseholdLedgerDerivedData CODE_SIGNING_ALLOWED=NO build
 ```

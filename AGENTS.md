@@ -18,16 +18,14 @@
 ├── .playwright-mcp/ # 本地浏览器自动化工具目录，用于开发时辅助调试。
 ├── .gitignore # Git 忽略规则，避免提交本地环境文件和运行时产物。
 ├── AGENTS.md # 项目级说明文档，记录仓库规则、代码简介和目录结构。
+├── HouseholdLedger.xcodeproj/ # Xcode 工程包，定义 iOS App target 和构建配置。
+│   ├── AGENTS.md # 工程包说明文档，记录目录规则、代码简介和结构。
+│   └── project.pbxproj # Xcode 工程配置，声明 App target、源码文件和构建设置。
+├── HouseholdLedger/ # SwiftUI 应用源码目录，包含模型、数据存储和页面视图。
+│   ├── AGENTS.md # 源码目录说明文档，记录目录规则、代码简介和结构。
+│   ├── ContentView.swift # 应用主界面，包含四个 Tab 页面和各业务视图。
+│   ├── HouseholdLedgerApp.swift # iOS App 入口，创建共享账本数据存储。
+│   ├── LedgerStore.swift # 本地账本状态管理、JSON 持久化和结清计算逻辑。
+│   └── Models.swift # 支出、结清、支付者和筛选条件等核心数据模型。
 ├── README.md # 项目说明文档，提供 iOS 应用的启动和构建方式。
-└── ios/ # SwiftUI iOS 应用工程，复刻当前记账和结清流程。
-    ├── AGENTS.md # iOS 目录说明文档，记录目录规则、代码简介和结构。
-    ├── HouseholdLedger.xcodeproj/ # Xcode 工程包，定义 iOS App target 和构建配置。
-    │   ├── AGENTS.md # 工程包说明文档，记录目录规则、代码简介和结构。
-    │   └── project.pbxproj # Xcode 工程配置，声明 App target、源码文件和构建设置。
-    └── HouseholdLedger/ # SwiftUI 应用源码目录，包含模型、数据存储和页面视图。
-        ├── AGENTS.md # 源码目录说明文档，记录目录规则、代码简介和结构。
-        ├── ContentView.swift # 应用主界面，包含四个 Tab 页面和各业务视图。
-        ├── HouseholdLedgerApp.swift # iOS App 入口，创建共享账本数据存储。
-        ├── LedgerStore.swift # 本地账本状态管理、JSON 持久化和结清计算逻辑。
-        └── Models.swift # 支出、结清、支付者和筛选条件等核心数据模型。
 ```
