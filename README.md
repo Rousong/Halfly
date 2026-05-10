@@ -2,7 +2,7 @@
 
 ## 项目概要
 
-这是一个基于 Streamlit 的家庭记账小应用，用于记录日常支出并管理 AA 结清。
+这是一个 SwiftUI iOS 家庭记账应用，用于记录日常支出并管理 AA 结清。
 
 当前已实现的功能包括：
 
@@ -10,32 +10,18 @@
 - 查看支出列表，并支持删除记录
 - 查看未结清 AA 支出的汇总情况
 - 生成结清记录，并查看历史结清结果
-- 使用本地 SQLite 数据库存储数据
+- 使用本地 JSON 文件存储数据
 
 ## 启动方式
 
-本项目当前使用仓库内已有的 `.venv` 虚拟环境启动。
-
-1. 进入项目目录
+使用 Xcode 打开工程：
 
 ```bash
-cd /Users/yzk/MyProjects/家庭记账本
+open ios/HouseholdLedger.xcodeproj
 ```
 
-2. 启动 Streamlit 应用
+也可以直接使用命令行构建：
 
 ```bash
-.venv/bin/streamlit run app.py
-```
-
-3. 在浏览器中打开本地地址
-
-```text
-http://localhost:8501
-```
-
-如果你更习惯使用 `uv`，也可以使用：
-
-```bash
-uv run streamlit run app.py
+xcodebuild -project ios/HouseholdLedger.xcodeproj -scheme HouseholdLedger -configuration Debug -destination generic/platform=iOS -derivedDataPath /private/tmp/HouseholdLedgerDerivedData CODE_SIGNING_ALLOWED=NO build
 ```

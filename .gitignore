@@ -1,7 +1,3 @@
 .DS_Store
-.venv/
-__pycache__/
-*.pyc
 .claude/
 .playwright-mcp/
-database/expenses.db
