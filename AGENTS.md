@@ -28,4 +28,7 @@
 │   ├── LedgerStore.swift # 本地账本状态管理、JSON 持久化和结清计算逻辑。
 │   └── Models.swift # 支出、结清、支付者和筛选条件等核心数据模型。
 ├── README.md # 项目说明文档，提供 iOS 应用的启动和构建方式。
+└── scripts/ # 本地开发脚本目录，用于一键运行项目。
+    ├── AGENTS.md # 脚本目录说明文档，记录目录规则、代码简介和结构。
+    └── run-ios-simulator.sh # 启动 iOS 模拟器、构建、安装并运行家庭记账本 App。
 ```

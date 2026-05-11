@@ -25,3 +25,13 @@ open HouseholdLedger.xcodeproj
 ```bash
 xcodebuild -project HouseholdLedger.xcodeproj -scheme HouseholdLedger -configuration Debug -destination generic/platform=iOS -derivedDataPath /private/tmp/HouseholdLedgerDerivedData CODE_SIGNING_ALLOWED=NO build
 ```
+
+## Codex 运行命令
+
+在 Codex 里配置运行命令时，使用：
+
+```bash
+./scripts/run-ios-simulator.sh
+```
+
+这个脚本会自动打开 iOS Simulator，选择一个可用的 iPhone 模拟器，构建、安装并启动 App。需要指定固定模拟器时，可以先设置 `SIMULATOR_UDID` 环境变量。
