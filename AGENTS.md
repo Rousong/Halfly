@@ -8,7 +8,7 @@
 
 ## 代码简介
 
-这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括支出录入、支出列表查看、AA 支出结清计算、结清记录查询，以及本地 JSON 持久化。
+这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括支出录入、支出列表查看、AA 支出结清计算、结清记录查询、本地 JSON 持久化，以及应用图标资源配置。
 
 ## 目录结构
 
@@ -23,6 +23,7 @@
 │   └── project.pbxproj # Xcode 工程配置，声明 App target、源码文件和构建设置。
 ├── HouseholdLedger/ # SwiftUI 应用源码目录，包含模型、数据存储和页面视图。
 │   ├── AGENTS.md # 源码目录说明文档，记录目录规则、代码简介和结构。
+│   ├── Assets.xcassets/ # 应用资源目录，包含 App 图标资源集。
 │   ├── ContentView.swift # 应用主界面，包含四个 Tab 页面和各业务视图。
 │   ├── HouseholdLedgerApp.swift # iOS App 入口，创建共享账本数据存储。
 │   ├── LedgerStore.swift # 本地账本状态管理、JSON 持久化和结清计算逻辑。

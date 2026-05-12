@@ -8,12 +8,12 @@
 
 ## 代码简介
 
-此目录存放 Xcode 工程配置，用于构建家庭记账本 iOS App。
+此目录存放 Xcode 工程配置，用于构建家庭记账本 iOS App，并声明应用资源与 App 图标配置。
 
 ## 目录结构
 
 ```text
 HouseholdLedger.xcodeproj/ # Xcode 工程包目录。
 ├── AGENTS.md # 工程包说明文档，记录目录规则、代码简介和结构。
-└── project.pbxproj # Xcode 工程配置，声明 App target、源码文件和构建设置。
+└── project.pbxproj # Xcode 工程配置，声明 App target、源码文件、资源文件和构建设置。
 ```
