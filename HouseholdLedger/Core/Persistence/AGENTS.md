@@ -8,12 +8,12 @@
 
 ## 代码简介
 
-此目录存放本地账本状态管理和 JSON 文件持久化逻辑。
+此目录存放多账本状态管理、当前账本切换和 SwiftData 持久化逻辑。
 
 ## 目录结构
 
 ```text
-Persistence/ # 本地持久化和状态管理目录。
+Persistence/ # SwiftData 持久化和状态管理目录。
 ├── AGENTS.md # Persistence 目录说明文档，记录目录规则、代码简介和结构。
-└── LedgerStore.swift # LedgerStore 状态对象，负责增删支出、计算汇总、创建结清和保存 JSON。
+└── LedgerStore.swift # LedgerStore 状态对象，负责创建与切换账本、增删支出、双人结清和保存 SwiftData 数据。
 ```

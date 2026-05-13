@@ -32,7 +32,13 @@ struct RecentSettlementsSection: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("\(dateText(settlement.settlementDate)) · 总额 \(yuan(settlement.totalAmount))")
                                 .font(.headline)
-                            Text(settlementText(for: settlement.netTransfer))
+                            Text(
+                                settlementText(
+                                    firstParticipantName: settlement.firstParticipantName,
+                                    secondParticipantName: settlement.secondParticipantName,
+                                    netTransfer: settlement.netTransfer
+                                )
+                            )
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }

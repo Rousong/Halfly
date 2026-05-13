@@ -1,34 +1,70 @@
 import Foundation
+import SwiftData
 
 @MainActor
 final class LedgerStore: ObservableObject {
     enum LedgerError: LocalizedError {
         case noUnsettledSharedExpenses
+        case noSelectedLedger
+        case unsupportedSettlementParticipants
 
         var errorDescription: String? {
             switch self {
             case .noUnsettledSharedExpenses:
                 return "没有可结清的 AA 支出"
+            case .noSelectedLedger:
+                return "请先创建一个账本"
+            case .unsupportedSettlementParticipants:
+                return "当前仅支持两人账本结清"
             }
         }
     }
 
-    @Published private(set) var expenses: [Expense]
-    @Published private(set) var settlements: [Settlement]
+    @Published private(set) var ledgers: [Ledger] = []
+    @Published private(set) var selectedLedgerID: UUID?
+    @Published private var refreshToken = UUID()
 
-    private let storageURL: URL
-    private let encoder = JSONEncoder()
-    private let decoder = JSONDecoder()
+    private let modelContext: ModelContext
+    private let userDefaults: UserDefaults
+    private let selectedLedgerKey = "selected-ledger-id"
 
-    init(storageURL: URL? = nil) {
-        self.storageURL = storageURL ?? Self.defaultStorageURL()
-        self.encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        self.encoder.dateEncodingStrategy = .iso8601
-        self.decoder.dateDecodingStrategy = .iso8601
+    init(modelContext: ModelContext, userDefaults: UserDefaults = .standard) {
+        self.modelContext = modelContext
+        self.userDefaults = userDefaults
+        if let value = userDefaults.string(forKey: selectedLedgerKey) {
+            self.selectedLedgerID = UUID(uuidString: value)
+        }
+        reloadLedgers()
+    }
 
-        let snapshot = Self.loadSnapshot(from: self.storageURL, decoder: self.decoder)
-        self.expenses = snapshot.expenses
-        self.settlements = snapshot.settlements
+    var currentLedger: Ledger? {
+        guard let selectedLedgerID else {
+            return ledgers.first
+        }
+
+        return ledgers.first(where: { $0.id == selectedLedgerID }) ?? ledgers.first
+    }
+
+    func createLedger(participantCount: Int, kind: LedgerKind) {
+        let ledger = Ledger(
+            name: nextLedgerName(for: kind),
+            kind: kind,
+            participantNames: kind.defaultParticipantNames(count: participantCount)
+        )
+        modelContext.insert(ledger)
+        selectedLedgerID = ledger.id
+        persistSelection()
+        saveAndRefresh()
+    }
+
+    func selectLedger(id: UUID) {
+        guard ledgers.contains(where: { $0.id == id }) else {
+            return
+        }
+
+        selectedLedgerID = id
+        persistSelection()
+        triggerRefresh()
     }
 
     func addExpense(
@@ -36,46 +72,63 @@ final class LedgerStore: ObservableObject {
         category: String,
         memo: String,
         expenseDate: Date,
-        payer: Payer,
+        payerName: String,
         isShared: Bool
     ) {
+        guard let currentLedger else {
+            return
+        }
+
         let expense = Expense(
             amount: amount.roundedToCents(),
             category: category,
             memo: memo.trimmingCharacters(in: .whitespacesAndNewlines),
             expenseDate: expenseDate,
-            payer: payer,
-            isShared: isShared
+            payerName: payerName,
+            isShared: isShared,
+            ledger: currentLedger
         )
-        expenses.append(expense)
-        save()
+        modelContext.insert(expense)
+        saveAndRefresh()
     }
 
-    func deleteExpense(id: Expense.ID) {
-        expenses.removeAll { $0.id == id }
-        save()
+    func deleteExpense(id: UUID) {
+        guard let expense = expenses(matching: .all).first(where: { $0.id == id }) else {
+            return
+        }
+
+        modelContext.delete(expense)
+        saveAndRefresh()
     }
 
     func expenses(matching filter: ExpenseFilter) -> [Expense] {
+        guard let currentLedger else {
+            return []
+        }
+
         let filtered: [Expense]
 
         switch filter {
         case .all:
-            filtered = expenses
+            filtered = currentLedger.expenses
         case .unsettledShared:
-            filtered = expenses.filter { $0.isShared && $0.settlementID == nil }
+            filtered = currentLedger.expenses.filter { $0.isShared && $0.settlement == nil }
         case .settled:
-            filtered = expenses.filter { $0.settlementID != nil }
+            filtered = currentLedger.expenses.filter { $0.settlement != nil }
         case .personal:
-            filtered = expenses.filter { !$0.isShared }
+            filtered = currentLedger.expenses.filter { !$0.isShared }
         }
 
         return filtered.sortedForList()
     }
 
     func unsettledSharedExpenses() -> [Expense] {
-        expenses
-            .filter { $0.isShared && $0.settlementID == nil }
+        guard let currentLedger else {
+            return []
+        }
+
+        return currentLedger.expenses
+            .filter { $0.isShared && $0.settlement == nil }
             .sorted {
                 if $0.expenseDate != $1.expenseDate {
                     return $0.expenseDate < $1.expenseDate
@@ -84,9 +137,13 @@ final class LedgerStore: ObservableObject {
             }
     }
 
-    func settlementExpenses(for settlementID: Settlement.ID) -> [Expense] {
-        expenses
-            .filter { $0.settlementID == settlementID }
+    func settlementExpenses(for settlementID: UUID) -> [Expense] {
+        guard let currentLedger else {
+            return []
+        }
+
+        return currentLedger.expenses
+            .filter { $0.settlement?.id == settlementID }
             .sorted {
                 if $0.expenseDate != $1.expenseDate {
                     return $0.expenseDate < $1.expenseDate
@@ -96,79 +153,130 @@ final class LedgerStore: ObservableObject {
     }
 
     func settlementsForDisplay() -> [Settlement] {
-        settlements.sorted { $0.settlementDate > $1.settlementDate }
+        guard let currentLedger else {
+            return []
+        }
+
+        return currentLedger.settlements.sorted { $0.settlementDate > $1.settlementDate }
     }
 
-    func summary(for expenses: [Expense]) -> LedgerSummary {
+    func summary(for expenses: [Expense]) -> LedgerSummary? {
+        guard
+            let currentLedger,
+            currentLedger.supportsPairSettlement
+        else {
+            return nil
+        }
+
+        let firstParticipantName = currentLedger.participantNames[0]
+        let secondParticipantName = currentLedger.participantNames[1]
         let shared = expenses.filter(\.isShared)
         let total = shared.reduce(0) { $0 + $1.amount }.roundedToCents()
-        let mePaid = shared.filter { $0.payer == .me }.reduce(0) { $0 + $1.amount }.roundedToCents()
-        let wifePaid = shared.filter { $0.payer == .wife }.reduce(0) { $0 + $1.amount }.roundedToCents()
-        return LedgerSummary(total: total, mePaid: mePaid, wifePaid: wifePaid)
+        let firstPaid = shared
+            .filter { $0.payerName == firstParticipantName }
+            .reduce(0) { $0 + $1.amount }
+            .roundedToCents()
+        let secondPaid = shared
+            .filter { $0.payerName == secondParticipantName }
+            .reduce(0) { $0 + $1.amount }
+            .roundedToCents()
+
+        return LedgerSummary(
+            total: total,
+            firstParticipantName: firstParticipantName,
+            firstParticipantPaid: firstPaid,
+            secondParticipantName: secondParticipantName,
+            secondParticipantPaid: secondPaid
+        )
     }
 
     @discardableResult
     func createSettlement(note: String) throws -> Settlement {
+        guard let currentLedger else {
+            throw LedgerError.noSelectedLedger
+        }
+
+        guard currentLedger.supportsPairSettlement else {
+            throw LedgerError.unsupportedSettlementParticipants
+        }
+
         let pending = unsettledSharedExpenses()
 
         guard !pending.isEmpty else {
             throw LedgerError.noUnsettledSharedExpenses
         }
 
-        let summary = summary(for: pending)
+        guard let summary = summary(for: pending) else {
+            throw LedgerError.unsupportedSettlementParticipants
+        }
+
         let settlement = Settlement(
             note: note.trimmingCharacters(in: .whitespacesAndNewlines),
             totalAmount: summary.total,
-            mePaid: summary.mePaid,
-            wifePaid: summary.wifePaid,
-            netTransfer: summary.netTransfer
+            firstParticipantName: summary.firstParticipantName,
+            firstParticipantPaid: summary.firstParticipantPaid,
+            secondParticipantName: summary.secondParticipantName,
+            secondParticipantPaid: summary.secondParticipantPaid,
+            netTransfer: summary.netTransfer,
+            ledger: currentLedger
         )
-        let pendingIDs = Set(pending.map(\.id))
+        modelContext.insert(settlement)
 
-        expenses = expenses.map { expense in
-            var updated = expense
-            if pendingIDs.contains(expense.id) {
-                updated.settlementID = settlement.id
-            }
-            return updated
+        for expense in pending {
+            expense.settlement = settlement
         }
-        settlements.append(settlement)
-        save()
 
+        saveAndRefresh()
         return settlement
     }
 
-    private static func defaultStorageURL() -> URL {
-        let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return directory.appendingPathComponent("household-ledger.json")
+    private func reloadLedgers() {
+        var descriptor = FetchDescriptor<Ledger>(
+            sortBy: [SortDescriptor(\Ledger.createdAt, order: .reverse)]
+        )
+        descriptor.includePendingChanges = true
+        ledgers = (try? modelContext.fetch(descriptor)) ?? []
+        reconcileSelection()
+        triggerRefresh()
     }
 
-    private static func loadSnapshot(from url: URL, decoder: JSONDecoder) -> LedgerSnapshot {
-        guard let data = try? Data(contentsOf: url) else {
-            return LedgerSnapshot(expenses: [], settlements: [])
+    private func reconcileSelection() {
+        if let selectedLedgerID, ledgers.contains(where: { $0.id == selectedLedgerID }) {
+            return
         }
 
-        return (try? decoder.decode(LedgerSnapshot.self, from: data)) ?? LedgerSnapshot(expenses: [], settlements: [])
+        selectedLedgerID = ledgers.first?.id
+        persistSelection()
     }
 
-    private func save() {
+    private func persistSelection() {
+        userDefaults.set(selectedLedgerID?.uuidString, forKey: selectedLedgerKey)
+    }
+
+    private func saveAndRefresh() {
         do {
-            let snapshot = LedgerSnapshot(expenses: expenses, settlements: settlements)
-            let data = try encoder.encode(snapshot)
-            try FileManager.default.createDirectory(
-                at: storageURL.deletingLastPathComponent(),
-                withIntermediateDirectories: true
-            )
-            try data.write(to: storageURL, options: .atomic)
+            if modelContext.hasChanges {
+                try modelContext.save()
+            }
         } catch {
             assertionFailure("保存账本失败：\(error.localizedDescription)")
         }
-    }
-}
 
-private struct LedgerSnapshot: Codable {
-    var expenses: [Expense]
-    var settlements: [Settlement]
+        reloadLedgers()
+    }
+
+    private func triggerRefresh() {
+        refreshToken = UUID()
+    }
+
+    private func nextLedgerName(for kind: LedgerKind) -> String {
+        let baseName = kind.defaultLedgerName
+        let existingCount = ledgers.filter { $0.name.hasPrefix(baseName) }.count
+        if existingCount == 0 {
+            return baseName
+        }
+        return "\(baseName) \(existingCount + 1)"
+    }
 }
 
 private extension Array where Element == Expense {

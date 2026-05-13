@@ -8,13 +8,13 @@
 
 ## 代码简介
 
-此目录存放结清管理页面和结清记录展示组件。
+此目录存放双人账本结清管理页面和结清记录展示组件。
 
 ## 目录结构
 
 ```text
-Views/ # 结清功能页面和组件目录。
+Views/ # 双人账本结清功能页面和组件目录。
 ├── AGENTS.md # Views 目录说明文档，记录目录规则、代码简介和结构。
 ├── RecentSettlementsSection.swift # 结清记录列表组件，可展示最近或全部结清记录。
-└── SettlementManagementView.swift # 结清管理页面，展示待结清支出并创建结清记录。
+└── SettlementManagementView.swift # 结清管理页面，在双人账本中展示待结清支出并创建结清记录。
 ```

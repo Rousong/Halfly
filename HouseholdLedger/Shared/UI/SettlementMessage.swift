@@ -1,13 +1,14 @@
 import SwiftUI
 
 struct SettlementMessage: View {
-    let netTransfer: Double
+    let text: String
+    let isBalanced: Bool
 
     var body: some View {
         Label {
-            Text(settlementText(for: netTransfer))
+            Text(text)
         } icon: {
-            Image(systemName: netTransfer == 0 ? "equal.circle" : "arrow.left.arrow.right.circle")
+            Image(systemName: isBalanced ? "equal.circle" : "arrow.left.arrow.right.circle")
         }
     }
 }

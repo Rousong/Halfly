@@ -6,8 +6,8 @@ struct SummarySection: View {
     var body: some View {
         Section("AA 汇总") {
             MetricRow(title: "AA 总金额", value: yuan(summary.total), systemImage: "sum")
-            MetricRow(title: "我垫付", value: yuan(summary.mePaid), systemImage: "person")
-            MetricRow(title: "老婆垫付", value: yuan(summary.wifePaid), systemImage: "person.fill")
+            MetricRow(title: "\(summary.firstParticipantName)垫付", value: yuan(summary.firstParticipantPaid), systemImage: "person")
+            MetricRow(title: "\(summary.secondParticipantName)垫付", value: yuan(summary.secondParticipantPaid), systemImage: "person.fill")
         }
     }
 }

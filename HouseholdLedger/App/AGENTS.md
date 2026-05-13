@@ -8,13 +8,13 @@
 
 ## 代码简介
 
-此目录存放应用入口和根视图组合代码，负责创建共享账本数据存储并组装底部 Tab 导航。
+此目录存放应用入口和根视图组合代码，负责创建 SwiftData 容器、组装共享账本数据存储、提供账本创建与切换入口，并组装底部 Tab 导航。
 
 ## 目录结构
 
 ```text
 App/ # 应用入口、生命周期和根导航目录。
 ├── AGENTS.md # App 目录说明文档，记录目录规则、代码简介和结构。
-├── HouseholdLedgerApp.swift # iOS App 入口，创建 LedgerStore 并注入根视图环境。
-└── RootView.swift # 应用根视图，组装记录、列表、概览和结清四个 Tab。
+├── HouseholdLedgerApp.swift # iOS App 入口，创建 SwiftData ModelContainer、LedgerStore 并注入根视图环境。
+└── RootView.swift # 应用根视图，提供账本创建与切换入口，并组装账本、记录、列表、概览和结清五个 Tab。
 ```

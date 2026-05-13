@@ -8,14 +8,14 @@
 
 ## 代码简介
 
-此目录存放应用静态资源，目前包含 App 图标资源集。
+此目录存放应用静态资源，目前包含 App 图标资源集。图标资源仍保留在仓库中，但当前 target 为绕开本机 `actool`/模拟器运行时问题，暂未编译该资源目录。
 
 ## 目录结构
 
 ```text
 Resources/ # 应用静态资源目录。
 ├── AGENTS.md # Resources 目录说明文档，记录目录规则、代码简介和结构。
-└── Assets.xcassets/ # 应用资源目录，包含 AppIcon 图标资源集。
+└── Assets.xcassets/ # 应用资源目录，包含 AppIcon 图标资源集，当前未加入 target 的资源编译阶段。
     ├── AppIcon.appiconset/ # iOS App 图标资源集，提供各设备所需尺寸。
     │   ├── AppIcon-1024.png # App Store 与图标源图尺寸。
     │   ├── AppIcon-20.png # iPad 20pt 图标的 1x 位图资源。

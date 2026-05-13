@@ -17,7 +17,7 @@ struct ExpenseRow: View {
 
             HStack(spacing: 8) {
                 Label(dateText(expense.expenseDate), systemImage: "calendar")
-                Text(expense.payer.rawValue)
+                Text(expense.payerName)
                 Text(expense.isShared ? "AA" : "个人")
                 Text(expense.settlementID == nil ? "未结清" : "已结清")
             }

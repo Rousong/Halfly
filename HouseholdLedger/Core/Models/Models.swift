@@ -1,10 +1,78 @@
 import Foundation
+import SwiftData
 
-enum Payer: String, CaseIterable, Codable, Identifiable {
-    case me = "我"
-    case wife = "老婆"
+enum LedgerKind: String, CaseIterable, Codable, Identifiable {
+    case household = "家庭 AA"
+    case travel = "旅行"
+    case outing = "出行"
+    case gathering = "聚餐"
+    case other = "其他"
 
     var id: String { rawValue }
+
+    var defaultLedgerName: String {
+        switch self {
+        case .household:
+            return "家庭账本"
+        case .travel:
+            return "旅行账本"
+        case .outing:
+            return "出行账本"
+        case .gathering:
+            return "聚餐账本"
+        case .other:
+            return "其他账本"
+        }
+    }
+
+    func defaultParticipantNames(count: Int) -> [String] {
+        if self == .household && count == 2 {
+            return ["我", "老婆"]
+        }
+
+        return (1...count).map { "成员\($0)" }
+    }
+}
+
+@Model
+final class Ledger {
+    var id: UUID
+    var name: String
+    var kind: LedgerKind
+    var participantNames: [String]
+    var createdAt: Date
+
+    @Relationship(deleteRule: .cascade, inverse: \Expense.ledger)
+    var expenses: [Expense]
+
+    @Relationship(deleteRule: .cascade, inverse: \Settlement.ledger)
+    var settlements: [Settlement]
+
+    init(
+        id: UUID = UUID(),
+        name: String,
+        kind: LedgerKind,
+        participantNames: [String],
+        createdAt: Date = Date(),
+        expenses: [Expense] = [],
+        settlements: [Settlement] = []
+    ) {
+        self.id = id
+        self.name = name
+        self.kind = kind
+        self.participantNames = participantNames
+        self.createdAt = createdAt
+        self.expenses = expenses
+        self.settlements = settlements
+    }
+
+    var participantCount: Int {
+        participantNames.count
+    }
+
+    var supportsPairSettlement: Bool {
+        participantNames.count == 2
+    }
 }
 
 enum ExpenseFilter: String, CaseIterable, Identifiable {
@@ -16,16 +84,18 @@ enum ExpenseFilter: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-struct Expense: Identifiable, Codable, Equatable {
+@Model
+final class Expense {
     var id: UUID
     var amount: Double
     var category: String
     var memo: String
     var expenseDate: Date
-    var payer: Payer
+    var payerName: String
     var isShared: Bool
-    var settlementID: UUID?
     var createdAt: Date
+    var ledger: Ledger?
+    var settlement: Settlement?
 
     init(
         id: UUID = UUID(),
@@ -33,58 +103,81 @@ struct Expense: Identifiable, Codable, Equatable {
         category: String,
         memo: String,
         expenseDate: Date,
-        payer: Payer,
+        payerName: String,
         isShared: Bool,
-        settlementID: UUID? = nil,
-        createdAt: Date = Date()
+        createdAt: Date = Date(),
+        ledger: Ledger? = nil,
+        settlement: Settlement? = nil
     ) {
         self.id = id
         self.amount = amount
         self.category = category
         self.memo = memo
         self.expenseDate = expenseDate
-        self.payer = payer
+        self.payerName = payerName
         self.isShared = isShared
-        self.settlementID = settlementID
         self.createdAt = createdAt
+        self.ledger = ledger
+        self.settlement = settlement
+    }
+
+    var settlementID: UUID? {
+        settlement?.id
     }
 }
 
-struct Settlement: Identifiable, Codable, Equatable {
+@Model
+final class Settlement {
     var id: UUID
     var settlementDate: Date
     var note: String
     var totalAmount: Double
-    var mePaid: Double
-    var wifePaid: Double
+    var firstParticipantName: String
+    var firstParticipantPaid: Double
+    var secondParticipantName: String
+    var secondParticipantPaid: Double
     var netTransfer: Double
+    var ledger: Ledger?
+
+    @Relationship(deleteRule: .nullify, inverse: \Expense.settlement)
+    var expenses: [Expense]
 
     init(
         id: UUID = UUID(),
         settlementDate: Date = Date(),
         note: String,
         totalAmount: Double,
-        mePaid: Double,
-        wifePaid: Double,
-        netTransfer: Double
+        firstParticipantName: String,
+        firstParticipantPaid: Double,
+        secondParticipantName: String,
+        secondParticipantPaid: Double,
+        netTransfer: Double,
+        ledger: Ledger? = nil,
+        expenses: [Expense] = []
     ) {
         self.id = id
         self.settlementDate = settlementDate
         self.note = note
         self.totalAmount = totalAmount
-        self.mePaid = mePaid
-        self.wifePaid = wifePaid
+        self.firstParticipantName = firstParticipantName
+        self.firstParticipantPaid = firstParticipantPaid
+        self.secondParticipantName = secondParticipantName
+        self.secondParticipantPaid = secondParticipantPaid
         self.netTransfer = netTransfer
+        self.ledger = ledger
+        self.expenses = expenses
     }
 }
 
 struct LedgerSummary: Equatable {
     var total: Double
-    var mePaid: Double
-    var wifePaid: Double
+    var firstParticipantName: String
+    var firstParticipantPaid: Double
+    var secondParticipantName: String
+    var secondParticipantPaid: Double
 
     var netTransfer: Double {
-        ((mePaid - wifePaid) / 2).roundedToCents()
+        ((firstParticipantPaid - secondParticipantPaid) / 2).roundedToCents()
     }
 }
 

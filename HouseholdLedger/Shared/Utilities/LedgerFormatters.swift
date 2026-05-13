@@ -8,13 +8,13 @@ func dateText(_ date: Date) -> String {
     date.formatted(.dateTime.year().month().day())
 }
 
-func settlementText(for netTransfer: Double) -> String {
+func settlementText(firstParticipantName: String, secondParticipantName: String, netTransfer: Double) -> String {
     if netTransfer > 0 {
-        return "老婆需转账给我：\(yuan(netTransfer))"
+        return "\(secondParticipantName)需转账给\(firstParticipantName)：\(yuan(netTransfer))"
     }
 
     if netTransfer < 0 {
-        return "我需要转账给老婆：\(yuan(abs(netTransfer)))"
+        return "\(firstParticipantName)需转账给\(secondParticipantName)：\(yuan(abs(netTransfer)))"
     }
 
     return "双方持平，无需转账"
