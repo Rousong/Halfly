@@ -8,7 +8,7 @@
 
 ## 代码简介
 
-这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括支出录入、支出列表查看、AA 支出结清计算、结清记录查询、本地 JSON 持久化，以及应用图标资源配置。
+这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括支出录入、支出列表查看、AA 支出结清计算、结清记录查询、本地 JSON 持久化，以及应用图标资源配置。源码已按 App、Features、Core、Shared、Resources 分层组织。
 
 ## 目录结构
 
@@ -20,14 +20,29 @@
 ├── AGENTS.md # 项目级说明文档，记录仓库规则、代码简介和目录结构。
 ├── HouseholdLedger.xcodeproj/ # Xcode 工程包，定义 iOS App target 和构建配置。
 │   ├── AGENTS.md # 工程包说明文档，记录目录规则、代码简介和结构。
-│   └── project.pbxproj # Xcode 工程配置，声明 App target、源码文件和构建设置。
-├── HouseholdLedger/ # SwiftUI 应用源码目录，包含模型、数据存储和页面视图。
+│   └── project.pbxproj # Xcode 工程配置，声明 App target、分组后的源码文件、资源文件和构建设置。
+├── HouseholdLedger/ # SwiftUI 应用源码目录，按 App、Features、Core、Shared、Resources 分层组织。
 │   ├── AGENTS.md # 源码目录说明文档，记录目录规则、代码简介和结构。
-│   ├── Assets.xcassets/ # 应用资源目录，包含 App 图标资源集。
-│   ├── ContentView.swift # 应用主界面，包含四个 Tab 页面和各业务视图。
-│   ├── HouseholdLedgerApp.swift # iOS App 入口，创建共享账本数据存储。
-│   ├── LedgerStore.swift # 本地账本状态管理、JSON 持久化和结清计算逻辑。
-│   └── Models.swift # 支出、结清、支付者和筛选条件等核心数据模型。
+│   ├── App/ # 应用入口和根导航目录，负责 App 生命周期和 Tab 组合。
+│   │   ├── AGENTS.md # App 目录说明文档，记录目录规则、代码简介和结构。
+│   │   ├── HouseholdLedgerApp.swift # iOS App 入口，创建共享账本数据存储。
+│   │   └── RootView.swift # 应用根视图，组合记录、列表、概览和结清四个 Tab。
+│   ├── Core/ # 核心业务模型和本地持久化目录。
+│   │   ├── AGENTS.md # Core 目录说明文档，记录目录规则、代码简介和结构。
+│   │   ├── Models/ # 账本领域模型目录。
+│   │   └── Persistence/ # 本地 JSON 持久化和账本状态管理目录。
+│   ├── Features/ # 用户可见功能目录，按支出、概览和结清组织页面。
+│   │   ├── AGENTS.md # Features 目录说明文档，记录目录规则、代码简介和结构。
+│   │   ├── Expenses/ # 支出录入和支出列表功能目录。
+│   │   ├── Overview/ # 账本概览功能目录。
+│   │   └── Settlements/ # AA 结清管理和结清记录功能目录。
+│   ├── Resources/ # 应用静态资源目录，包含 App 图标资源集。
+│   │   ├── AGENTS.md # Resources 目录说明文档，记录目录规则、代码简介和结构。
+│   │   └── Assets.xcassets/ # 应用资源目录，包含 AppIcon 图标资源集。
+│   └── Shared/ # 跨功能复用的 SwiftUI 组件和工具函数目录。
+│       ├── AGENTS.md # Shared 目录说明文档，记录目录规则、代码简介和结构。
+│       ├── UI/ # 支出行、汇总区块、指标行和结清提示等复用组件。
+│       └── Utilities/ # 金额、日期和结清文案格式化函数。
 ├── README.md # 项目说明文档，提供 iOS 应用的启动和构建方式。
 └── scripts/ # 本地开发脚本目录，用于一键运行项目。
     ├── AGENTS.md # 脚本目录说明文档，记录目录规则、代码简介和结构。

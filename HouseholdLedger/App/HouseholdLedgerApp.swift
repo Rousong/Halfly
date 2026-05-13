@@ -6,7 +6,7 @@ struct HouseholdLedgerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
                 .environmentObject(store)
         }
     }

@@ -1,0 +1,19 @@
+# Core/Persistence 目录
+
+- 如果修改此目录里面的代码文件，那么请同步更新此 MD 文档。
+
+<!-- USER-SUBDIRECTORY-RULES:START -->
+<!-- 用户自定义的子目录规则写在这里；如果这里除了本注释外没有任何内容，则忽略本区块。 -->
+<!-- USER-SUBDIRECTORY-RULES:END -->
+
+## 代码简介
+
+此目录存放本地账本状态管理和 JSON 文件持久化逻辑。
+
+## 目录结构
+
+```text
+Persistence/ # 本地持久化和状态管理目录。
+├── AGENTS.md # Persistence 目录说明文档，记录目录规则、代码简介和结构。
+└── LedgerStore.swift # LedgerStore 状态对象，负责增删支出、计算汇总、创建结清和保存 JSON。
+```

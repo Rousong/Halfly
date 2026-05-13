@@ -8,19 +8,39 @@
 
 /* Begin PBXBuildFile section */
 		110000000000000000000001 /* HouseholdLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000011 /* HouseholdLedgerApp.swift */; };
-		110000000000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000012 /* ContentView.swift */; };
+		110000000000000000000002 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000012 /* RootView.swift */; };
 		110000000000000000000003 /* LedgerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000013 /* LedgerStore.swift */; };
 		110000000000000000000004 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000014 /* Models.swift */; };
 		110000000000000000000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000016 /* Assets.xcassets */; };
+		110000000000000000000006 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000017 /* AddExpenseView.swift */; };
+		110000000000000000000007 /* ExpenseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000018 /* ExpenseListView.swift */; };
+		110000000000000000000008 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000019 /* OverviewView.swift */; };
+		110000000000000000000009 /* SettlementManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000020 /* SettlementManagementView.swift */; };
+		110000000000000000000010 /* RecentSettlementsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000022 /* RecentSettlementsSection.swift */; };
+		110000000000000000000090 /* SummarySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000023 /* SummarySection.swift */; };
+		110000000000000000000091 /* ExpenseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000024 /* ExpenseRow.swift */; };
+		110000000000000000000092 /* MetricRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000025 /* MetricRow.swift */; };
+		110000000000000000000093 /* SettlementMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000026 /* SettlementMessage.swift */; };
+		110000000000000000000094 /* LedgerFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110000000000000000000027 /* LedgerFormatters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		110000000000000000000011 /* HouseholdLedgerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdLedgerApp.swift; sourceTree = "<group>"; };
-		110000000000000000000012 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		110000000000000000000012 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		110000000000000000000013 /* LedgerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedgerStore.swift; sourceTree = "<group>"; };
 		110000000000000000000014 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		110000000000000000000015 /* HouseholdLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HouseholdLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		110000000000000000000016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		110000000000000000000017 /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
+		110000000000000000000018 /* ExpenseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseListView.swift; sourceTree = "<group>"; };
+		110000000000000000000019 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
+		110000000000000000000020 /* SettlementManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementManagementView.swift; sourceTree = "<group>"; };
+		110000000000000000000022 /* RecentSettlementsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSettlementsSection.swift; sourceTree = "<group>"; };
+		110000000000000000000023 /* SummarySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySection.swift; sourceTree = "<group>"; };
+		110000000000000000000024 /* ExpenseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseRow.swift; sourceTree = "<group>"; };
+		110000000000000000000025 /* MetricRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricRow.swift; sourceTree = "<group>"; };
+		110000000000000000000026 /* SettlementMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementMessage.swift; sourceTree = "<group>"; };
+		110000000000000000000027 /* LedgerFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedgerFormatters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,11 +65,11 @@
 		110000000000000000000032 /* HouseholdLedger */ = {
 			isa = PBXGroup;
 			children = (
-				110000000000000000000011 /* HouseholdLedgerApp.swift */,
-				110000000000000000000012 /* ContentView.swift */,
-				110000000000000000000013 /* LedgerStore.swift */,
-				110000000000000000000014 /* Models.swift */,
-				110000000000000000000016 /* Assets.xcassets */,
+				110000000000000000000100 /* App */,
+				110000000000000000000101 /* Features */,
+				110000000000000000000108 /* Core */,
+				110000000000000000000111 /* Shared */,
+				110000000000000000000114 /* Resources */,
 			);
 			path = HouseholdLedger;
 			sourceTree = "<group>";
@@ -60,6 +80,136 @@
 				110000000000000000000015 /* HouseholdLedger.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		110000000000000000000100 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000011 /* HouseholdLedgerApp.swift */,
+				110000000000000000000012 /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		110000000000000000000101 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000102 /* Expenses */,
+				110000000000000000000104 /* Overview */,
+				110000000000000000000106 /* Settlements */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		110000000000000000000102 /* Expenses */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000103 /* Views */,
+			);
+			path = Expenses;
+			sourceTree = "<group>";
+		};
+		110000000000000000000103 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000017 /* AddExpenseView.swift */,
+				110000000000000000000018 /* ExpenseListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		110000000000000000000104 /* Overview */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000105 /* Views */,
+			);
+			path = Overview;
+			sourceTree = "<group>";
+		};
+		110000000000000000000105 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000019 /* OverviewView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		110000000000000000000106 /* Settlements */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000107 /* Views */,
+			);
+			path = Settlements;
+			sourceTree = "<group>";
+		};
+		110000000000000000000107 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000020 /* SettlementManagementView.swift */,
+				110000000000000000000022 /* RecentSettlementsSection.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		110000000000000000000108 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000109 /* Models */,
+				110000000000000000000110 /* Persistence */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		110000000000000000000109 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000014 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		110000000000000000000110 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000013 /* LedgerStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		110000000000000000000111 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000112 /* UI */,
+				110000000000000000000113 /* Utilities */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		110000000000000000000112 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000024 /* ExpenseRow.swift */,
+				110000000000000000000025 /* MetricRow.swift */,
+				110000000000000000000026 /* SettlementMessage.swift */,
+				110000000000000000000023 /* SummarySection.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		110000000000000000000113 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000027 /* LedgerFormatters.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		110000000000000000000114 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				110000000000000000000016 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,9 +283,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				110000000000000000000001 /* HouseholdLedgerApp.swift in Sources */,
-				110000000000000000000002 /* ContentView.swift in Sources */,
+				110000000000000000000002 /* RootView.swift in Sources */,
+				110000000000000000000006 /* AddExpenseView.swift in Sources */,
+				110000000000000000000007 /* ExpenseListView.swift in Sources */,
+				110000000000000000000008 /* OverviewView.swift in Sources */,
+				110000000000000000000009 /* SettlementManagementView.swift in Sources */,
+				110000000000000000000010 /* RecentSettlementsSection.swift in Sources */,
 				110000000000000000000003 /* LedgerStore.swift in Sources */,
 				110000000000000000000004 /* Models.swift in Sources */,
+				110000000000000000000090 /* SummarySection.swift in Sources */,
+				110000000000000000000091 /* ExpenseRow.swift in Sources */,
+				110000000000000000000092 /* MetricRow.swift in Sources */,
+				110000000000000000000093 /* SettlementMessage.swift in Sources */,
+				110000000000000000000094 /* LedgerFormatters.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
