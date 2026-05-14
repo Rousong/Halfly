@@ -853,10 +853,16 @@
     .form-label {
       display: flex;
       align-items: center;
+      flex: 0 0 auto;
       gap: 12px;
       color: var(--ink);
       font-size: 15px;
       font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .form-label .setting-icon {
+      flex: 0 0 34px;
     }
 
     .form-value,
@@ -872,9 +878,14 @@
 
     .input-plain,
     textarea.input-plain {
-      width: 100%;
+      flex: 1 1 auto;
+      width: auto;
+      min-width: 0;
+      margin-left: 12px;
       border: 0;
       outline: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
       text-align: right;
       color: var(--muted);
       background: transparent;
@@ -882,6 +893,8 @@
     }
 
     textarea.input-plain {
+      flex-basis: 100%;
+      margin-left: 0;
       min-height: 72px;
       resize: none;
       text-align: left;
