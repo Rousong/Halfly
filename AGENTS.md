@@ -8,7 +8,7 @@
 
 ## 代码简介
 
-这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括多账本创建与切换、按账本人数和性质初始化成员、支出录入、支出列表查看、双人账本 AA 支出结清计算、结清记录查询、基于 SwiftData 的本地持久化，以及应用图标资源配置。源码已按 App、Features、Core、Shared、Resources 分层组织。根目录的 `prototype-design/` 存放单文件 HTML/CSS/JavaScript 高保真 iOS UI 原型和对应功能规格，用于本地预览家庭记账应用的屏幕方案、交互质感、创建账本时的人数与成员形象设置流程，以及未来业务实现要求。根目录的 `vercel.json` 为静态原型部署提供根路径重写配置，`.vercelignore` 将 Vercel 发布范围限制为原型目录和部署配置。
+这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括多账本创建与切换、按账本人数和性质初始化成员、支出录入、支出列表查看、双人账本 AA 支出结清计算、结清记录查询、基于 SwiftData 的本地持久化，以及应用图标资源配置。源码已按 App、Features、Core、Shared、Resources 分层组织。根目录的 `prototype-design/` 存放单文件 HTML/CSS/JavaScript 高保真 iOS UI 原型和对应功能规格，用于本地预览家庭记账应用的屏幕方案、交互质感、首页 Logo 顶栏与账本切换、创建账本时的人数与成员形象设置流程，以及未来业务实现要求。根目录的 `vercel.json` 为静态原型部署提供根路径重写配置，`.vercelignore` 将 Vercel 发布范围限制为原型目录和部署配置。
 
 ## 目录结构
 
