@@ -8,7 +8,7 @@
 
 ## 代码简介
 
-这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括多账本创建与切换、按账本人数和性质初始化成员、支出录入、支出列表查看、双人账本 AA 支出结清计算、结清记录查询、基于 SwiftData 的本地持久化，以及应用图标资源配置。源码已按 App、Features、Core、Shared、Resources 分层组织。根目录还包含一份单文件 HTML/CSS/JavaScript 高保真 iOS UI 原型，用于本地预览家庭记账应用的屏幕方案和交互质感。
+这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括多账本创建与切换、按账本人数和性质初始化成员、支出录入、支出列表查看、双人账本 AA 支出结清计算、结清记录查询、基于 SwiftData 的本地持久化，以及应用图标资源配置。源码已按 App、Features、Core、Shared、Resources 分层组织。根目录的 `prototype-design/` 存放单文件 HTML/CSS/JavaScript 高保真 iOS UI 原型和对应功能规格，用于本地预览家庭记账应用的屏幕方案、交互质感和未来业务实现要求。
 
 ## 目录结构
 
@@ -43,8 +43,11 @@
 │       ├── AGENTS.md # Shared 目录说明文档，记录目录规则、代码简介和结构。
 │       ├── UI/ # 支出行、汇总区块、指标行和结清提示等复用组件。
 │       └── Utilities/ # 金额、日期和结清文案格式化函数。
+├── prototype-design/ # 本地高保真 iOS UI 原型包，包含单文件 HTML 原型和真实业务功能规格。
+│   ├── AGENTS.md # 原型设计目录说明文档，记录目录规则、代码简介和结构。
+│   ├── FUNCTIONAL_SPEC.md # 原型对应的真实业务功能规格，描述页面、模块、交互、数据和状态要求。
+│   └── ios-ui-prototype.html # 单文件高保真 iOS UI 原型，使用模拟数据展示首页、记录、详情、新建和设置屏幕。
 ├── README.md # 项目说明文档，提供 iOS 应用的启动和构建方式。
-├── ios-ui-prototype.html # 单文件高保真 iOS UI 原型，使用模拟数据展示首页、记录、详情、新建和设置屏幕。
 └── scripts/ # 本地开发脚本目录，用于一键运行项目。
     ├── AGENTS.md # 脚本目录说明文档，记录目录规则、代码简介和结构。
     └── run-ios-simulator.sh # 启动 iOS 模拟器、构建、安装并运行家庭记账本 App。
