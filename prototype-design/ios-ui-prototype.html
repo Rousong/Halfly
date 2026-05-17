@@ -426,6 +426,7 @@
 
     .section-title a,
     .text-link {
+      background: transparent;
       color: var(--accent-deep);
       text-decoration: none;
       font-size: 14px;
@@ -1002,10 +1003,12 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      width: 100%;
       padding: 16px;
       border-radius: 26px;
       background: rgba(255, 255, 255, .86);
       box-shadow: inset 0 0 0 1px rgba(30, 37, 34, .06), 0 14px 34px rgba(34, 40, 38, .06);
+      text-align: left;
     }
 
     .avatar {
@@ -1018,6 +1021,128 @@
       background: linear-gradient(145deg, #33433f, #2f7f73);
       font-size: 22px;
       font-weight: 850;
+    }
+
+    .ledger-hero {
+      margin: 8px 0 20px;
+      padding: 20px;
+      border-radius: 28px;
+      color: #f8fbf8;
+      background:
+        radial-gradient(circle at 84% 20%, rgba(241, 185, 91, .34), transparent 28%),
+        linear-gradient(145deg, #1e2926, #2e756b);
+      box-shadow: 0 18px 38px rgba(25, 73, 66, .18);
+    }
+
+    .ledger-hero .input-plain {
+      width: 100%;
+      margin: 10px 0 0;
+      color: #fff;
+      font-size: 28px;
+      line-height: 1.08;
+      text-align: left;
+    }
+
+    .ledger-hero .input-plain::placeholder {
+      color: rgba(255, 255, 255, .58);
+    }
+
+    .member-count {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      padding: 14px;
+    }
+
+    .member-card {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .86);
+      box-shadow: inset 0 0 0 1px rgba(30, 37, 34, .06), 0 12px 28px rgba(34, 40, 38, .055);
+    }
+
+    .member-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-face {
+      display: grid;
+      place-items: center;
+      flex: 0 0 56px;
+      width: 56px;
+      height: 56px;
+      border-radius: 21px;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 850;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+    }
+
+    .avatar-face.forest { background: linear-gradient(145deg, #244d45, #62a692); }
+    .avatar-face.sunset { background: linear-gradient(145deg, #8f5136, #e2a35f); }
+    .avatar-face.lake { background: linear-gradient(145deg, #355d82, #7fb5c8); }
+    .avatar-face.berry { background: linear-gradient(145deg, #7a3f61, #d77c91); }
+    .avatar-face.stone { background: linear-gradient(145deg, #4c5652, #9ca6a0); }
+
+    .member-name {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .member-role {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 650;
+    }
+
+    .avatar-tools {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .avatar-options {
+      display: flex;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .avatar-option {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 13px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 850;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .avatar-option.active {
+      box-shadow: inset 0 0 0 2px #fff, 0 0 0 3px rgba(47, 127, 115, .22);
+    }
+
+    .tiny-button {
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--accent-deep);
+      background: rgba(47, 127, 115, .1);
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
     }
 
     .tab-bar {
@@ -1534,6 +1659,11 @@
 
               <div class="setting-group-title">账户</div>
               <div class="group-card">
+                <button class="setting-row" type="button" data-view="ledger-create">
+                  <span class="setting-icon green"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                  <div class="item-body"><div class="item-title">创建账本</div><div class="item-subtitle">选择人数，并为每位成员设置形象</div></div>
+                  <svg class="icon" style="color:var(--subtle)"><use href="#i-chevron"></use></svg>
+                </button>
                 <button class="setting-row" type="button" data-show-toast="当前为本地模拟账户">
                   <span class="setting-icon green"><svg class="icon"><use href="#i-user"></use></svg></span>
                   <div class="item-body"><div class="item-title">家庭成员</div><div class="item-subtitle">陈一、林予</div></div>
@@ -1585,6 +1715,54 @@
             </div>
           </section>
 
+          <section class="view" id="view-ledger-create" data-view-panel="ledger-create">
+            <div class="scroll">
+              <div class="topbar">
+                <button class="back-button" type="button" data-view="settings">
+                  <svg class="icon"><use href="#i-back"></use></svg>
+                  返回
+                </button>
+                <button class="nav-action pressable" type="button" data-save-ledger>
+                  <svg class="icon"><use href="#i-plus"></use></svg>
+                </button>
+              </div>
+
+              <div class="eyebrow">新账本</div>
+              <h1 class="large-title">创建账本</h1>
+
+              <article class="ledger-hero">
+                <div class="hero-label">账本名称</div>
+                <input class="input-plain" value="周末旅行账本" aria-label="账本名称" placeholder="输入账本名称">
+                <div class="detail-meta" style="margin-top:12px">人数和成员形象会影响后续付款人、分摊和结清页面。</div>
+              </article>
+
+              <div class="section-title">
+                <h2>账本人数</h2>
+                <span class="pill" id="member-count-label">2 人</span>
+              </div>
+              <div class="form-group">
+                <div class="member-count" aria-label="账本人数">
+                  <button class="chip member-count-chip" type="button" data-member-count="1">1</button>
+                  <button class="chip member-count-chip active" type="button" data-member-count="2">2</button>
+                  <button class="chip member-count-chip" type="button" data-member-count="3">3</button>
+                  <button class="chip member-count-chip" type="button" data-member-count="4">4</button>
+                  <button class="chip member-count-chip" type="button" data-member-count="5">5+</button>
+                </div>
+              </div>
+
+              <div class="section-title">
+                <h2>成员形象</h2>
+                <button class="text-link" type="button" data-random-all>全部随机</button>
+              </div>
+              <div id="ledger-members" style="display:grid;gap:12px"></div>
+
+              <div style="margin-top:24px">
+                <button class="primary-button pressable" type="button" data-save-ledger>创建账本</button>
+                <button class="secondary-button pressable" type="button" data-view="settings">取消</button>
+              </div>
+            </div>
+          </section>
+
           <nav class="tab-bar" aria-label="主导航">
             <button class="tab active" type="button" data-view="dashboard">
               <svg class="icon"><use href="#i-home"></use></svg>
@@ -1617,6 +1795,21 @@
     const toast = document.getElementById("toast");
     let lastMainView = "dashboard";
     let toastTimer;
+    let ledgerMemberCount = 2;
+
+    const avatarStyles = [
+      { id: "forest", label: "森", name: "青绿" },
+      { id: "sunset", label: "晴", name: "暖橙" },
+      { id: "lake", label: "川", name: "湖蓝" },
+      { id: "berry", label: "予", name: "莓粉" },
+      { id: "stone", label: "石", name: "雾灰" }
+    ];
+
+    const defaultMemberNames = ["陈一", "林予", "成员 3", "成员 4", "成员 5"];
+    const ledgerMembers = defaultMemberNames.map((name, index) => ({
+      name,
+      avatarIndex: index % avatarStyles.length
+    }));
 
     function showToast(message) {
       toast.textContent = message;
@@ -1653,6 +1846,52 @@
       setView("detail");
     }
 
+    function escapeHtml(value) {
+      return value
+        .replaceAll("&", "&amp;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function renderLedgerMembers() {
+      const container = document.getElementById("ledger-members");
+      const countLabel = document.getElementById("member-count-label");
+      if (!container || !countLabel) return;
+
+      countLabel.textContent = `${ledgerMemberCount} 人`;
+      container.innerHTML = ledgerMembers.slice(0, ledgerMemberCount).map((member, index) => {
+        const avatar = avatarStyles[member.avatarIndex];
+        const options = avatarStyles.map((style, styleIndex) => `
+          <button class="avatar-option ${style.id}${styleIndex === member.avatarIndex ? " active" : ""}" type="button" data-avatar-choice="${styleIndex}" data-member-index="${index}" aria-label="${style.name}形象">${style.label}</button>
+        `).join("");
+
+        return `
+          <article class="member-card">
+            <div class="member-head">
+              <div class="avatar-face ${avatar.id}" aria-hidden="true">${avatar.label}</div>
+              <div class="item-body">
+                <input class="member-name" value="${escapeHtml(member.name)}" aria-label="成员 ${index + 1} 名称" data-member-name="${index}">
+                <div class="member-role">成员 ${index + 1} · ${avatar.name}形象</div>
+              </div>
+              <button class="tiny-button" type="button" data-random-avatar="${index}">换一个</button>
+            </div>
+            <div class="avatar-tools">
+              <div class="avatar-options" aria-label="手动选择成员 ${index + 1} 形象">${options}</div>
+              <span class="item-subtitle">可手动设置</span>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function randomizeAvatar(index) {
+      const current = ledgerMembers[index].avatarIndex;
+      let next = Math.floor(Math.random() * avatarStyles.length);
+      if (next === current) next = (next + 1) % avatarStyles.length;
+      ledgerMembers[index].avatarIndex = next;
+    }
+
     document.addEventListener("click", (event) => {
       const viewTarget = event.target.closest("[data-view]");
       if (viewTarget) {
@@ -1678,10 +1917,57 @@
         return;
       }
 
+      const memberCountTarget = event.target.closest("[data-member-count]");
+      if (memberCountTarget) {
+        ledgerMemberCount = Number(memberCountTarget.dataset.memberCount);
+        document.querySelectorAll("[data-member-count]").forEach((item) => item.classList.remove("active"));
+        memberCountTarget.classList.add("active");
+        renderLedgerMembers();
+        return;
+      }
+
+      const randomAllTarget = event.target.closest("[data-random-all]");
+      if (randomAllTarget) {
+        for (let index = 0; index < ledgerMemberCount; index += 1) {
+          randomizeAvatar(index);
+        }
+        renderLedgerMembers();
+        showToast("已为成员随机生成形象");
+        return;
+      }
+
+      const randomAvatarTarget = event.target.closest("[data-random-avatar]");
+      if (randomAvatarTarget) {
+        randomizeAvatar(Number(randomAvatarTarget.dataset.randomAvatar));
+        renderLedgerMembers();
+        return;
+      }
+
+      const avatarChoiceTarget = event.target.closest("[data-avatar-choice]");
+      if (avatarChoiceTarget) {
+        const memberIndex = Number(avatarChoiceTarget.dataset.memberIndex);
+        ledgerMembers[memberIndex].avatarIndex = Number(avatarChoiceTarget.dataset.avatarChoice);
+        renderLedgerMembers();
+        return;
+      }
+
+      if (event.target.closest("[data-save-ledger]")) {
+        showToast(`已创建 ${ledgerMemberCount} 人账本`);
+        setTimeout(() => setView("settings"), 420);
+        return;
+      }
+
       if (event.target.closest("[data-save]")) {
         showToast("已保存到共同账本");
         setTimeout(() => setView("records"), 420);
       }
+    });
+
+    document.addEventListener("input", (event) => {
+      const nameInput = event.target.closest("[data-member-name]");
+      if (!nameInput) return;
+
+      ledgerMembers[Number(nameInput.dataset.memberName)].name = nameInput.value;
     });
 
     document.querySelectorAll(".segment").forEach((segment) => {
@@ -1708,6 +1994,8 @@
         control.classList.toggle("active");
       });
     });
+
+    renderLedgerMembers();
   </script>
 </body>
 </html>
