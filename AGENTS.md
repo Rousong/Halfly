@@ -8,7 +8,7 @@
 
 ## 代码简介
 
-这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括多账本创建与切换、按账本人数和性质初始化成员、支出录入、支出列表查看、双人账本 AA 支出结清计算、结清记录查询、基于 SwiftData 的本地持久化，以及应用图标资源配置。源码已按 App、Features、Core、Shared、Resources 分层组织。根目录的 `prototype-design/` 存放单文件 HTML/CSS/JavaScript 高保真 iOS UI 原型和对应功能规格，用于本地预览家庭记账应用的屏幕方案、交互质感、创建账本时的人数与成员形象设置流程，以及未来业务实现要求。
+这是一个基于 SwiftUI 的 iOS 家庭记账应用。当前核心功能包括多账本创建与切换、按账本人数和性质初始化成员、支出录入、支出列表查看、双人账本 AA 支出结清计算、结清记录查询、基于 SwiftData 的本地持久化，以及应用图标资源配置。源码已按 App、Features、Core、Shared、Resources 分层组织。根目录的 `prototype-design/` 存放单文件 HTML/CSS/JavaScript 高保真 iOS UI 原型和对应功能规格，用于本地预览家庭记账应用的屏幕方案、交互质感、创建账本时的人数与成员形象设置流程，以及未来业务实现要求。根目录的 `vercel.json` 为静态原型部署提供根路径重写配置，`.vercelignore` 将 Vercel 发布范围限制为原型目录和部署配置。
 
 ## 目录结构
 
@@ -17,6 +17,7 @@
 ├── .claude/ # 本地 AI 工具相关配置目录，不属于应用运行逻辑。
 ├── .playwright-mcp/ # 本地浏览器自动化工具目录，用于开发时辅助调试。
 ├── .gitignore # Git 忽略规则，避免提交本地环境文件和运行时产物。
+├── .vercelignore # Vercel 忽略规则，发布时仅放行原型目录和部署配置。
 ├── AGENTS.md # 项目级说明文档，记录仓库规则、代码简介和目录结构。
 ├── HouseholdLedger.xcodeproj/ # Xcode 工程包，定义 iOS App target 和构建配置。
 │   ├── AGENTS.md # 工程包说明文档，记录目录规则、代码简介和结构。
@@ -48,7 +49,8 @@
 │   ├── FUNCTIONAL_SPEC.md # 原型对应的真实业务功能规格，描述页面、模块、交互、数据和状态要求。
 │   └── ios-ui-prototype.html # 单文件高保真 iOS UI 原型，使用模拟数据展示首页、记录、详情、新建和设置屏幕。
 ├── README.md # 项目说明文档，提供 iOS 应用的启动和构建方式。
-└── scripts/ # 本地开发脚本目录，用于一键运行项目。
-    ├── AGENTS.md # 脚本目录说明文档，记录目录规则、代码简介和结构。
-    └── run-ios-simulator.sh # 启动 iOS 模拟器、构建、安装并运行家庭记账本 App。
+├── scripts/ # 本地开发脚本目录，用于一键运行项目。
+│   ├── AGENTS.md # 脚本目录说明文档，记录目录规则、代码简介和结构。
+│   └── run-ios-simulator.sh # 启动 iOS 模拟器、构建、安装并运行家庭记账本 App。
+└── vercel.json # Vercel 静态部署配置，将根路径重写到原型 HTML。
 ```

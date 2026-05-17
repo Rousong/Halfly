@@ -5,3 +5,5 @@ build/
 DerivedData/
 xcuserdata/
 *.xcuserstate
+.vercel
+.env*.local

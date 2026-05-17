@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/prototype-design/ios-ui-prototype.html"
+    }
+  ]
+}
